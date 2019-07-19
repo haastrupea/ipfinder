@@ -1,0 +1,29 @@
+{
+  "name": "findip",
+  "version": "1.0.0",
+  "description": "Find details of an ip any ip and give result",
+  "main": "findip.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "findip",
+    "ipfinder"
+  ],
+  "author": "Haastrup elijah",
+  "license": "ISC",
+  "dependencies": {
+    "ipfinder": "^1.0.1",
+    "node-fetch": "^2.6.0",
+    "redis": "^2.8.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haastrupea/ipfinder.git"
+  },
+  "bugs": {
+    "url": "https://github.com/haastrupea/ipfinder/issues"
+  },
+  "homepage": "https://github.com/haastrupea/ipfinder#readme"
+}
