@@ -37,7 +37,7 @@ client.on('connect', () => {
                         //resturn api response to client
                         render({ ip: ip, info: ipinfo });
                     }).catch((er) => {
-                        console.log("error", er);
+                        console.log("error:", er);
                     })
             }
         })
