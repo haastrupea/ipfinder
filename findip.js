@@ -50,7 +50,6 @@ if (iparg) {
     findip(iparg)
 } else {
     rd.question(`Enter any IP address`, (ip) => {
-        console.log(ip);
         findip(ip);
         rd.close();
     })
