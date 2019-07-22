@@ -6,7 +6,7 @@ const rd = require("readline").createInterface({
 });
 const client = redis.createClient(6379);
 client.on("error", (err) => {
-    console.log("cSomething went wrong", err);
+    console.log("Something went wrong", err);
     throw err;
 });
 
@@ -37,7 +37,7 @@ const findip = (ip) => {
                     // Save the  response in Redis db
                     client.set(ip, JSON.stringify(ipinfo));
                     //resturn api response to client
-                    render({ ip: ip, info: ipinfo });
+                    render({ ip: ip, info: JSON.stringify(ipinfo) });
                 }).catch((er) => {
                     console.log("error:", er);
                 })
@@ -49,7 +49,7 @@ let iparg = getarg("-ip");
 if (iparg) {
     findip(iparg)
 } else {
-    rd.question(`Enter any IP address`, (ip) => {
+    rd.question(`Enter any IP address >`, (ip) => {
         findip(ip);
         rd.close();
     })
