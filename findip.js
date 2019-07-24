@@ -50,7 +50,6 @@ const findip = (ip,loop=false) => {
     })
 }
 
-
 let iparg = getarg("-ip");
 if (iparg) {
     findip(iparg)
