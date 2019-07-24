@@ -29,7 +29,6 @@ const getarg = (flag) => {
     let i = process.argv.indexOf(flag);
     return i === -1 ? null : process.argv[i + 1];
 }
-
 const findip = (ip,loop=false) => {
     client.get(ip, (err, ipinfo) => {
         if (ipinfo) {
