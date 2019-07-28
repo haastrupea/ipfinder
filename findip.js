@@ -31,6 +31,10 @@ const getarg = (flag) => {
 }
 const findip = (ip,loop=false) => {
     client.get(ip, (err, ipinfo) => {
+        if(err){
+            console.log("DB Error:",err.message)
+            return;
+        }
         if (ipinfo) {
             render({ ip: ip, info: ipinfo,loop:loop });
         } else {
@@ -44,7 +48,7 @@ const findip = (ip,loop=false) => {
                     //resturn api response to client
                     render({ ip: ip, info: JSON.stringify(ipinfo),loop:loop});
                 }).catch((er) => {
-                    console.log("error:", er);
+                    console.log("error fetching the IP details:", er);
                 })
         }
     })
