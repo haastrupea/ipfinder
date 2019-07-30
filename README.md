@@ -1,4 +1,4 @@
-# ipfinder {#ipfind}
+# ipfinder
 
 >Node.js cli programme that display details about a given ip address
 
@@ -6,6 +6,9 @@ using Redis to  cache API CAll responses so that future call with the same ip ad
 
 ## How to run
 
-```JS
+```npm
     npm install
+```
+```nodejs
+node findip
 ```
