@@ -1,4 +1,4 @@
-# ipfinder{#ipfind}
+# ipfinder {#ipfind}
 
 >Node.js cli programme that display details about a given ip address
 
