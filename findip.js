@@ -29,7 +29,13 @@ const getarg = (flag) => {
     let i = process.argv.indexOf(flag);
     return i === -1 ? null : process.argv[i + 1];
 }
+const isValid= (ip)=>/^[0-2][0-5]{0,2}\.[0-2][0-5]{0,2}\.[0-2][0-5]{0,2}\.[0-2][0-5]{0,2}$/.test(ip);
+
 const findip = (ip,loop=false) => {
+    if(!isValid(ip)){
+    console.log("Please Enter a Valid IP Address");
+        return;
+    }
     client.get(ip, (err, ipinfo) => {
         if(err){
             console.log("DB Error:",err.message)
