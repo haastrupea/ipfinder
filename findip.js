@@ -6,8 +6,9 @@ client.on("error", (err) => {
     console.log("Something went wrong", err);
     throw err;
 });
-const ask=()=>{
-    process.stdout.write("Enter any IP address > ");
+const ask=(msg="Enter any IP address")=>{
+    process.stdout.write(msg);
+    process.stdout.write(" > ");
 }
 
 const render = ({ info, ip,loop }) => {
@@ -29,35 +30,36 @@ const getarg = (flag) => {
     let i = process.argv.indexOf(flag);
     return i === -1 ? null : process.argv[i + 1];
 }
-const isValid= (ip)=>/^[0-2][0-5]{0,2}\.[0-2][0-5]{0,2}\.[0-2][0-5]{0,2}\.[0-2][0-5]{0,2}$/.test(ip);
+//todo:ensure that the ip can not 
+const isValid= (ip)=>/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(ip);
 
 const findip = (ip,loop=false) => {
-    if(!isValid(ip)){
-    console.log("Please Enter a Valid IP Address");
-        return;
+    if(ip.toLowerCase()!=="exit" && !isValid(ip)){
+    ask("Please Enter a Valid IP Address");
+    }else{
+        client.get(ip, (err, ipinfo) => {
+            if(err){
+                console.log("DB Error:",err.message)
+                return;
+            }
+            if (ipinfo) {
+                render({ ip: ip, info: ipinfo,loop:loop });
+            } else {
+                let ipstack = "http://api.ipstack.com/" + ip.trim() + "?access_key=ae4854a7fe49882068f3232d261fbb6a&fields=continent_name,country_name,region_name,latitude,longitude";
+    
+                fetch(ipstack)
+                    .then(res => res.json())
+                    .then((ipinfo) => {
+                        // Save the  response in Redis db
+                        client.set(ip, JSON.stringify(ipinfo));
+                        //resturn api response to client
+                        render({ ip: ip, info: JSON.stringify(ipinfo),loop:loop});
+                    }).catch((er) => {
+                        console.log("error fetching the IP details:", er);
+                    })
+            }
+        })
     }
-    client.get(ip, (err, ipinfo) => {
-        if(err){
-            console.log("DB Error:",err.message)
-            return;
-        }
-        if (ipinfo) {
-            render({ ip: ip, info: ipinfo,loop:loop });
-        } else {
-            let ipstack = "http://api.ipstack.com/" + ip.trim() + "?access_key=ae4854a7fe49882068f3232d261fbb6a&fields=continent_name,country_name,region_name,latitude,longitude";
-
-            fetch(ipstack)
-                .then(res => res.json())
-                .then((ipinfo) => {
-                    // Save the  response in Redis db
-                    client.set(ip, JSON.stringify(ipinfo));
-                    //resturn api response to client
-                    render({ ip: ip, info: JSON.stringify(ipinfo),loop:loop});
-                }).catch((er) => {
-                    console.log("error fetching the IP details:", er);
-                })
-        }
-    })
 }
 
 let iparg = getarg("-ip");
