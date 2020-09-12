@@ -14,7 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "ipfinder": "^1.0.1",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "redis": "^2.8.0"
   },
   "devDependencies": {},
